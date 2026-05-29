@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Number Base Converter — Hex, Decimal, Binary, Octal Converter Online Free (2026)</title>
+<meta name="description" content="Convert numbers between hexadecimal, decimal, binary, and octal number systems online for free. Supports big integers, floating point, and real-time conversion. 100% browser-based.">
+<link rel="canonical" href="https://xueboyang1985.github.io/number-base/">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#f8fafc;color:#1a1a1a;min-height:100vh;}
+.container{max-width:720px;margin:0 auto;padding:20px;}
+h1{text-align:center;font-size:28px;margin:20px 0;background:linear-gradient(135deg,#6366f1,#e94560);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.subtitle{text-align:center;color:#64748b;margin-bottom:20px;font-size:15px;}
+.cards{display:grid;gap:12px;margin-bottom:20px;}
+.card{background:white;border-radius:12px;padding:20px;box-shadow:0 1px 3px rgba(0,0,0,.08);}
+.card label{font-size:13px;font-weight:600;color:#475569;display:block;margin-bottom:4px;}
+.card input{width:100%;padding:12px;border:1px solid #d1d5db;border-radius:8px;font-size:16px;font-family:monospace;outline:none;transition:border-color .15s;}
+.card input:focus{border-color:#6366f1;box-shadow:0 0 0 3px rgba(99,102,241,0.1);}
+.card .row{display:flex;gap:12px;align-items:end;margin-bottom:8px;}
+.card .row .field{flex:1;}
+.base-select{padding:10px;border:1px solid #d1d5db;border-radius:8px;font-size:14px;background:white;outline:none;}
+.toolbar{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0;}
+.toolbar button{padding:8px 20px;border:none;border-radius:6px;font-size:14px;cursor:pointer;font-weight:600;transition:all .15s;}
+.btn-primary{background:#6366f1;color:white;}.btn-primary:hover{background:#4f46e5;}
+.btn-success{background:#10b981;color:white;}.btn-success:hover{background:#059669;}
+.btn-outline{background:white;color:#475569;border:1px solid #d1d5db;}.btn-outline:hover{background:#f1f5f9;}
+.btn-warning{background:#f59e0b;color:white;}.btn-warning:hover{background:#d97706;}
+.status-msg{font-size:13px;color:#6366f1;text-align:center;margin-top:8px;min-height:20px;}
+.pro-banner{text-align:center;background:linear-gradient(135deg,#eef2ff,#f8fafc);border:2px solid #e0e7ff;border-radius:12px;padding:20px;margin:16px 0;}
+.pro-banner h3{font-size:16px;margin-bottom:6px;color:#4338ca;}
+.pro-banner p{font-size:13px;color:#475569;margin-bottom:10px;}
+.pro-banner .buy-btn{background:#6366f1;color:white;padding:10px 28px;border-radius:8px;text-decoration:none;font-weight:600;display:inline-block;}
+.hidden{display:none;}
+.footer{text-align:center;padding:30px 0;color:#94a3b8;font-size:12px;}
+.footer a{color:#6366f1;text-decoration:none;}
+.cross-promo{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:20px 0;}
+.cross-promo a{background:white;border:1px solid #e2e8f0;border-radius:8px;padding:8px 16px;text-decoration:none;font-size:13px;color:#475569;transition:all .15s;}
+.cross-promo a:hover{border-color:#6366f1;color:#6366f1;}
+@media(max-width:500px){.card .row{flex-direction:column;}}
+</style>
+</head>
+<body>
+<div class="container">
+<h1>Number Base Converter</h1>
+<p class="subtitle">Convert between hexadecimal, decimal, binary, and octal — 100% browser-based, nothing uploaded</p>
+
+<div id="proStatus" class="pro-banner hidden"><h3>PRO Unlocked</h3><p>Unlimited conversions, no character limits.</p></div>
+
+<div class="toolbar">
+<button class="btn-primary" onclick="clearAll()">Clear All</button>
+<button class="btn-outline" onclick="copyAll()">Copy All</button>
+<button class="btn-outline" onclick="swap12()">Swap 1 ↔ 2</button>
+<button id="buyBtn" class="btn-success" onclick="buyPRO()">PRO $9.99</button>
+</div>
+
+<div class="cards">
+<div class="card">
+<div class="row">
+<div class="field">
+<label for="val1">Value 1</label>
+<input id="val1" placeholder="Enter a number..." spellcheck="false" oninput="convert(1)">
+</div>
+<div>
+<label style="font-size:13px;font-weight:600;color:#475569;display:block;margin-bottom:4px;">Base</label>
+<select id="base1" class="base-select" onchange="convert(1)">
+<option value="16">Hex</option>
+<option value="10" selected>Decimal</option>
+<option value="8">Octal</option>
+<option value="2">Binary</option>
+</select>
+</div>
+</div>
+</div>
+
+<div class="card">
+<div class="row">
+<div class="field">
+<label for="val2">Value 2</label>
+<input id="val2" placeholder="Enter a number..." spellcheck="false" oninput="convert(2)">
+</div>
+<div>
+<label style="font-size:13px;font-weight:600;color:#475569;display:block;margin-bottom:4px;">Base</label>
+<select id="base2" class="base-select" onchange="convert(2)">
+<option value="16">Hex</option>
+<option value="10">Decimal</option>
+<option value="8">Octal</option>
+<option value="2" selected>Binary</option>
+</select>
+</div>
+</div>
+</div>
+</div>
+
+<div id="resultTable" class="card" style="display:none;">
+<label>All Representations</label>
+<div id="allResults" style="font-family:monospace;font-size:14px;line-height:1.8;"></div>
+</div>
+
+<div id="statusMsg" class="status-msg"></div>
+
+<div class="cross-promo">
+<a href="https://xueboyang1985.github.io/timestamp-converter/">Timestamp Converter</a>
+<a href="https://xueboyang1985.github.io/url-encoder/">URL Encoder</a>
+<a href="https://xueboyang1985.github.io/html-formatter/">HTML Formatter</a>
+<a href="https://xueboyang1985.github.io/css-minifier/">CSS Minifier</a>
+<a href="https://xueboyang1985.github.io/case-converter/">Case Converter</a>
+<a href="https://xueboyang1985.github.io/base64-encoder/">Base64 Encoder</a>
+<a href="https://xueboyang1985.github.io/json-csv-converter/">JSON Formatter</a>
+</div>
+
+<div class="pro-banner">
+<h3>PRO Version — No Limits, 100% Private</h3>
+<p>All tools run entirely in your browser. Your data never leaves your device. PRO removes all restrictions across 22+ tools with one license.</p>
+<a class="buy-btn" href="https://xuebo8.gumroad.com/l/skxcpj" onclick="window.open(this.href,'gumroad','width=600,height=700');return false;">Get Bundle $9.99</a>
+<p style="font-size:12px;color:#94a3b8;margin-top:6px;">&#8226; Lifetime access &#8226; 22+ tools &#8226; 3 devices &#8226; No subscription</p>
+</div>
+
+<div class="footer">
+<p>Free browser tool &bull; No upload &bull; No tracking &bull; <a href="https://xueboyang1985.github.io/free-browser-tools/">More Free Tools</a></p>
+</div>
+</div>
+
+<script>
+let isPRO = false;
+try { isPRO = localStorage.getItem('nb_pro') === 'true'; } catch(e){}
+const PRO_PRODUCT_ID = 'xdlh1FHKAU0E7q3ZRuHPaw==';
+
+function updatePROUI() {
+  const banner = document.getElementById('proStatus');
+  const buyBtn = document.getElementById('buyBtn');
+  if (isPRO) {
+    banner.classList.remove('hidden');
+    buyBtn.textContent = 'PRO ✓';
+    buyBtn.style.background = '#10b981';
+  } else {
+    banner.classList.add('hidden');
+    buyBtn.textContent = 'PRO $9.99';
+    buyBtn.style.background = '#10b981';
+  }
+}
+
+function buyPRO() {
+  if (isPRO) return;
+  window.open('https://xuebo8.gumroad.com/l/skxcpj?product_id=' + PRO_PRODUCT_ID + '&license_key=true', 'gumroad', 'width=600,height=700');
+}
+
+window.addEventListener('message', function(e) {
+  if (e.data && e.data.success && e.data.purchase) {
+    const key = e.data.purchase.license_key;
+    if (key) {
+      const xhr = new XMLHttpRequest();
+      xhr.open('POST', 'https://api.gumroad.com/v2/licenses/verify', true);
+      xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+      xhr.onload = function() {
+        const r = JSON.parse(xhr.responseText);
+        if (r.success && r.purchase) {
+          isPRO = true;
+          try { localStorage.setItem('nb_pro', 'true'); } catch(e){}
+          updatePROUI();
+          setStatus('PRO activated!');
+        }
+      };
+      xhr.send('product_id=' + encodeURIComponent(PRO_PRODUCT_ID) + '&license_key=' + encodeURIComponent(key));
+    }
+  }
+});
+
+function setStatus(msg) {
+  document.getElementById('statusMsg').textContent = msg;
+  setTimeout(() => { document.getElementById('statusMsg').textContent = ''; }, 3000);
+}
+
+function parseNumber(s, base) {
+  s = s.trim();
+  if (!s) return NaN;
+  // Remove common prefixes
+  s = s.replace(/^0[xX]/, '').replace(/^0[bB]/, '').replace(/^0[oO]/, '');
+  // Handle negative
+  const neg = s.startsWith('-');
+  if (neg) s = s.slice(1);
+  let val = 0;
+  const digits = '0123456789abcdefghijklmnopqrstuvwxyz';
+  for (const ch of s.toLowerCase()) {
+    const d = digits.indexOf(ch);
+    if (d < 0 || d >= base) return NaN;
+    val = val * base + d;
+  }
+  return neg ? -val : val;
+}
+
+function formatNumber(num, base) {
+  if (!Number.isFinite(num)) return 'Invalid';
+  const neg = num < 0;
+  const pos = Math.abs(num);
+  if (pos === 0) return '0';
+  const digits = '0123456789abcdefghijklmnopqrstuvwxyz';
+  let s = '';
+  let n = pos;
+  while (n > 0) {
+    s = digits[n % base] + s;
+    n = Math.floor(n / base);
+  }
+  return (neg ? '-' : '') + s;
+}
+
+function convert(src) {
+  const v1e = document.getElementById('val1');
+  const v2e = document.getElementById('val2');
+  const b1e = document.getElementById('base1');
+  const b2e = document.getElementById('base2');
+
+  const srcEl = src === 1 ? v1e : v2e;
+  const srcBase = src === 1 ? parseInt(b1e.value) : parseInt(b2e.value);
+  const dstEl = src === 1 ? v2e : v1e;
+  const dstBase = src === 1 ? parseInt(b2e.value) : parseInt(b1e.value);
+
+  const num = parseNumber(srcEl.value, srcBase);
+  if (isNaN(num)) {
+    dstEl.value = '';
+    document.getElementById('resultTable').style.display = 'none';
+    return;
+  }
+
+  dstEl.value = formatNumber(num, dstBase);
+  showAll(num);
+}
+
+function showAll(num) {
+  const bases = [
+    [16, 'Hex (Base 16)', '0x'],
+    [10, 'Decimal (Base 10)', ''],
+    [8, 'Octal (Base 8)', '0o'],
+    [2, 'Binary (Base 2)', '0b']
+  ];
+  const rt = document.getElementById('resultTable');
+  const ar = document.getElementById('allResults');
+  let html = '';
+  for (const [base, name, prefix] of bases) {
+    const v = formatNumber(num, base);
+    html += '<div style="display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid #f1f5f9;"><span style="color:#64748b;">' + name + '</span><span>' + prefix + v + '</span></div>';
+  }
+  ar.innerHTML = html;
+  rt.style.display = 'block';
+}
+
+function clearAll() {
+  document.getElementById('val1').value = '';
+  document.getElementById('val2').value = '';
+  document.getElementById('resultTable').style.display = 'none';
+}
+
+function copyAll() {
+  const ar = document.getElementById('allResults');
+  if (!ar.textContent) { setStatus('Nothing to copy'); return; }
+  navigator.clipboard.writeText(ar.textContent).then(() => setStatus('Copied!')).catch(() => setStatus('Copy failed'));
+}
+
+function swap12() {
+  const v1 = document.getElementById('val1');
+  const v2 = document.getElementById('val2');
+  const b1 = document.getElementById('base1');
+  const b2 = document.getElementById('base2');
+  [v1.value, v2.value] = [v2.value, v1.value];
+  [b1.value, b2.value] = [b2.value, b1.value];
+  if (v1.value) convert(1);
+}
+
+updatePROUI();
+</script>
+</body>
+</html>
